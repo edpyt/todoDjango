@@ -7,10 +7,10 @@
 
 {% block content %}
     {% if not request.user.id %}
-        <form method="post">
+        <form class="form-tt" method="post">
             {% csrf_token %}
             {{ form|crispy }}
-            <input class="btn btn-primary" type="submit" value="{{ title }}">
+            <input class="btn btn-success" type="submit" value="{{ title }}">
         </form>
     {% else %}
         <h1>Вы уже вошли, {{ request.user }}</h1>

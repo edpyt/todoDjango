@@ -19,7 +19,7 @@ class MyUser(AbstractUser):
 
 class ToDoModel(models.Model):
     title = models.CharField(_('Title'), max_length=255)
-    content = models.TextField(_('Content'))
+    content = models.TextField(_('Content'), blank=True)
     date_created = models.DateTimeField(_('Date created'), auto_now_add=True)
     date_ending = models.DateTimeField(_('Expiration Date'))
 
@@ -29,3 +29,6 @@ class ToDoModel(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ('is_done', 'date_ending')

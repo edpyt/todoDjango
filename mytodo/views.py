@@ -1,14 +1,16 @@
-from datetime import timedelta, datetime
+from datetime import datetime
 
+from django.contrib import messages
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.forms import ValidationError
 
 from .models import MyUser, ToDoModel
-from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, ListView, CreateView, DeleteView
 from django.utils.translation import gettext_lazy as _
 
 from .forms import ToDoUser, LoginUserForm, RegistrationCustomUserForm
@@ -39,25 +41,32 @@ class ToDoList(ListView):
     def get_queryset(self):
         if self.request.user.id:
             todo_list = self.model.objects.filter(user=self.request.user)
-            not_solved = str(_('Task not solved'))
+            not_solved = str(_('Not solved task'))
             for todo in todo_list:
-                if todo.date_ending <= datetime.now(todo.date_ending.tzinfo)\
+                if todo.date_ending <= datetime.now(todo.date_ending.tzinfo) \
                         and todo.title != not_solved:
                     todo.title = not_solved
+                    todo.is_done = True
                     todo.save()
+
             return todo_list
         return None
 
     def post(self, request, *args, **kwargs):
-        done_list = [ToDoModel.objects.get(pk=todo_pk) for todo_pk in request.POST.getlist('checkbox_list')]
+        check_list = request.POST.getlist('checkbox_list')
 
-        for todo in done_list:
-            if todo.is_done:
-                todo.is_done = False
-            else:
+        done_list = [ToDoModel.objects.get(pk=todo_pk) for todo_pk in check_list]
+        active_done_list = [todo for todo in done_list if not todo.is_done]
+
+        if request.POST.get('Delete') and done_list:
+            for todo in done_list:
+                todo.delete()
+        elif active_done_list:
+            for todo in active_done_list:
                 todo.is_done = True
-
-            todo.save()
+                todo.save()
+        else:
+            messages.error(request, _('Select at least one active task'), extra_tags='danger')
 
         return redirect('todo_list')
 

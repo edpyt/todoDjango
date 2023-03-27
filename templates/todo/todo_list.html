@@ -7,27 +7,39 @@
 
 {% block content %}
     <h1>{{ title }}</h1>
+
     {% if not user.pk %}
         <h4>{% trans 'Login or register to create a task list' %}</h4>
     {% endif %}
 
     {% if todo_list %}
+        {% if messages %}
+
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                <li>{{ message }}</li>
+            </div>
+            {% endfor %}
+        {% endif %}
+
     <form method="POST">
-    <input type="submit" value="{% translate 'Send' %}" class="btn btn-success" >
+   <p>
+    <input name="Done" type="submit" value="{% translate 'Done' %}" class="btn btn-success" >
+    <input name="Delete" type="submit" value="{% translate 'Delete' %}" class="btn btn-danger" >
+   </p>
     {% csrf_token %}
     {% for todo in todo_list %}
 
-            <article class="shadow-sm p-3 mb-5 bg-body rounded w-75 text-center">
+            <div class="shadow-lg p-3 mb-5 text-white rounded center {% if todo.is_done %}bg-success{% else %}bg-secondary text-light{% endif %}">
                 {{ todo.date_created }} - {{ todo.date_ending }}
                 <h3>{{ todo }}</h3>
                 {{ todo.content|linebreaks }}
-                <label style="margin-left: 5rem;">
-                Is Done:
-                <input value="{{ todo.pk }}" type="checkbox" name="checkbox_list" title="Is Done" {% if todo.is_done %} checked disabled {% endif %}>
-                </label>
-                <a href="{% url 'todo_delete' todo.pk %}" class="btn btn-outline-danger" style="float: right;">{% translate 'Delete' %}</a>
 
-            </article>
+                <input style="float: right;" value="{{ todo.pk }}" type="checkbox" name="checkbox_list">
+
+{#                <a href="{% url 'todo_delete' todo.pk %}" class="btn btn-outline-danger" style="float: right;">{% translate 'Delete' %}</a>#}
+
+            </div>
     {% endfor %}
 
     </form>

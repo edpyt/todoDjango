@@ -12,7 +12,7 @@ from bootstrap_datepicker_plus.widgets import DateTimePickerInput
 class ToDoUser(ModelForm):
     class Meta:
         model = ToDoModel
-        fields = ['title', 'content', 'date_ending']
+        fields = ('title', 'content', 'date_ending')
         widgets = {
             'date_ending': DateTimePickerInput()}
         

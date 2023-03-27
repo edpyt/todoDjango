@@ -4,7 +4,9 @@
 
 body {
   margin: 0;
+  background: #202124;
   font-family: Arial, Helvetica, sans-serif;
+  color: #f3f4f5;
 }
 
 .topnav {
@@ -33,4 +35,14 @@ body {
 
 .topnav-right {
   float: right;
+}
+
+.form-tt textarea,
+.form-tt input[type=text],
+.form-tt input[type=email],
+.form-tt input[type=password],
+.form-tt input[type=file]{
+  background: #6c757d;
+  border: none;
+  color: #f3f4f5;
 }
