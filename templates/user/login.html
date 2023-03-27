@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}{{ title }}{% endblock %}
+
+
+{% block content %}
+    {% if not request.user.id %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input class="btn btn-primary" type="submit" value="{{ title }}">
+        </form>
+    {% else %}
+        <h1>Вы уже вошли, {{ request.user }}</h1>
+    {% endif %}
+{% endblock %}

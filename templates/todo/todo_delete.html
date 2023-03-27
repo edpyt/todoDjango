@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+
+{% block title %}{{ title }}{% endblock %}
+
+
+{% block content %}
+    {% if user.id == post.user.id or user.username == 'admin' %}
+    <form method="post">
+        {% csrf_token %}
+        <h1>{% translate 'Are you sure you want to delete this task?' %}</h1>
+        <input class="btn btn-danger" type="submit" value="{% translate 'Yes' %}">
+    </form>
+    {% endif %}
+{% endblock %}

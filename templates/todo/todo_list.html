@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+
+{% block title %}{{ title }}{% endblock %}
+
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    {% if not user.pk %}
+        <h4>{% trans 'Login or register to create a task list' %}</h4>
+    {% endif %}
+
+    {% if todo_list %}
+    <form method="POST">
+    <input type="submit" value="{% translate 'Send' %}" class="btn btn-success" >
+    {% csrf_token %}
+    {% for todo in todo_list %}
+
+            <article class="shadow-sm p-3 mb-5 bg-body rounded w-75 text-center">
+                {{ todo.date_created }} - {{ todo.date_ending }}
+                <h3>{{ todo }}</h3>
+                {{ todo.content|linebreaks }}
+                <label style="margin-left: 5rem;">
+                Is Done:
+                <input value="{{ todo.pk }}" type="checkbox" name="checkbox_list" title="Is Done" {% if todo.is_done %} checked disabled {% endif %}>
+                </label>
+                <a href="{% url 'todo_delete' todo.pk %}" class="btn btn-outline-danger" style="float: right;">{% translate 'Delete' %}</a>
+
+            </article>
+    {% endfor %}
+
+    </form>
+    {% endif %}
+{% endblock %}
