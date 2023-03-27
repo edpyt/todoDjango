@@ -9,6 +9,6 @@
     <form class="form-tt" method="POST" enctype="multipart/form-data" action="">
         {% csrf_token %}
         {{ form|crispy }}
-        <input type="submit" class="btn btn-success" value="{{ title }}">
+        <input type="submit" class="btn btn-success" value="Registrate">
     </form>
 {% endblock %}

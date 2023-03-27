@@ -8,6 +8,9 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+
     {% include 'scriptimport.html' %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
@@ -20,7 +23,7 @@
 
         <div class="topnav-right">
             {% if user.is_authenticated %}
-                <a href="{% url 'user_profile' user.pk %}">{{ user.username }}</a>
+                <a href="{% url 'user_profile' %}">{{ user.username }}</a>
                 <a href="{% url 'logout_myuser' %}">{% translate 'Logout' %}</a>
             {% else %}
                 <a href="{% url 'login_myuser' %}">{% translate 'Login' %}</a>
@@ -29,7 +32,7 @@
         </div>
     </div>
     <br>
-    <div class="container w-50 text-center">
+    <div class="container text-center">
         {% block content %}
         {% endblock %}
     </div>

@@ -42,8 +42,25 @@ body {
 .form-tt input[type=text],
 .form-tt input[type=email],
 .form-tt input[type=password],
-.form-tt input[type=file]{
+.form-tt input[type=file],
+.form-tt div .form-control,
+.form-tt a {
   background: #6c757d;
   border: none;
   color: #f3f4f5;
+}
+
+.form-tt input[type=password]::placeholder {
+  color: #333333;
+}
+
+.user-information {
+  width: 30rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.user-information .text-end-true {
+  float: right;
 }

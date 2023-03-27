@@ -1,12 +1,27 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 
 {% block title %}{{ title }}{% endblock %}
 
 
 {% block content %}
-    <img src="{{ myuser.photo.url }}" class="w-25">
+
+    <h1>{{ title }} {{ myuser }}</h1>
+
+    {% if myuser.photo %}
     <p>
-    {{ myuser }}
+        <img src="{{ myuser.photo.url }}" class="w-25" alt="{{ myuser }}">
     </p>
+    {% endif %}
+    <div class="user-information">
+        <p>{% trans 'Email' %}: <span class="text-end-true">{{ myuser.email }}</span></p>
+        <p>{% trans 'Date joined' %}: <span class="text-end-true">{{ myuser.date_joined }}</span></p>
+        <p>{% trans 'Last login' %}: <span class="text-end-true">{{ myuser.last_login }}</span></p>
+        <p>{% trans 'Is Staff' %}: <span class="text-end-true">{% if myuser.is_staff %}✅{% else %}❌{% endif %}</span></p>
+    </div>
+
+    <a href="{% url 'user_profile_edit' %}" class="btn btn-primary w-50">{% trans 'Redact user' %}</a>
+
+
 {% endblock %}

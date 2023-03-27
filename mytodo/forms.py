@@ -15,7 +15,7 @@ class ToDoUser(ModelForm):
         fields = ('title', 'content', 'date_ending')
         widgets = {
             'date_ending': DateTimePickerInput()}
-        
+
     def clean(self):
         date_ending = self.cleaned_data['date_ending']
         if date_ending <= datetime.now(date_ending.tzinfo):
@@ -40,4 +40,13 @@ class RegistrationCustomUserForm(UserCreationForm):
             'email',
             'password1',
             'password2',
+            'photo')
+
+
+class UpdateCustomUserForm(forms.ModelForm):
+    class Meta:
+        model = MyUser
+        fields = (
+            'username',
+            'email',
             'photo')

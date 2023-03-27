@@ -10,24 +10,13 @@ from django.urls import reverse_lazy
 from django.forms import ValidationError
 
 from .models import MyUser, ToDoModel
-from django.views.generic import DetailView, ListView, CreateView, DeleteView
+from django.views.generic import DetailView, ListView, CreateView, DeleteView, UpdateView
 from django.utils.translation import gettext_lazy as _
 
-from .forms import ToDoUser, LoginUserForm, RegistrationCustomUserForm
+from .forms import ToDoUser, LoginUserForm, RegistrationCustomUserForm, UpdateCustomUserForm
 
 
 # Create your views here.
-class MyUserDetail(DetailView):
-    model = MyUser
-    template_name = 'user/user_detail.html'
-    context_object_name = 'myuser'
-
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        data['title'] = _('Profile')
-        return data
-
-
 class ToDoList(ListView):
     model = ToDoModel
     template_name = 'todo/todo_list.html'
@@ -118,17 +107,47 @@ class LoginUser(LoginView):
 
 class RegisterUser(CreateView):
     form_class = RegistrationCustomUserForm
-    template_name = 'user/register.html'
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['title'] = _('Registrate')
+        data['title'] = _('Registration')
         return data
 
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
         return redirect('todo_list')
+
+    def get_template_names(self):
+        return 'user/registration.html'
+
+
+class DetailUserView(DetailView):
+    model = MyUser
+    template_name = 'user/user_detail.html'
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['title'] = _('User')
+        return data
+
+    def get_object(self, **kwargs):
+        return MyUser.objects.get(pk=self.request.user.pk)
+
+
+class UpdateUser(LoginRequiredMixin, UpdateView):
+    form_class = UpdateCustomUserForm
+    model = MyUser
+
+    template_name = 'user/user_update.html'
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['title'] = _('Redact User')
+        return data
+
+    def get_object(self, **kwargs):
+        return MyUser.objects.get(pk=self.request.user.pk)
 
 
 @login_required
