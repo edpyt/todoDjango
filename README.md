@@ -1,3 +1,3 @@
 # todoDjango
-!(https://i.imgur.com/mmk3ZNU.png)
-!(https://i.imgur.com/NpCAU8g.png)
+![Screenshot1](https://i.imgur.com/mmk3ZNU.png)
+![Screenshot2](https://i.imgur.com/NpCAU8g.png)
