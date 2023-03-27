@@ -4,6 +4,7 @@ from .views import MyUserDetail, ToDoList, CreateToDo, my_logout, LoginUser, Reg
 
 urlpatterns = [
     path('user/<int:pk>', MyUserDetail.as_view(), name='user_profile'),
+
     path('', ToDoList.as_view(), name='todo_list'),
     path('todo/create', CreateToDo.as_view(), name='todo_create'),
     path('todo/<int:pk>/delete', ToDoDelete.as_view(), name='todo_delete'),

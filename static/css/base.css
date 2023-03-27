@@ -38,6 +38,7 @@ body {
 }
 
 .form-tt textarea,
+.form-tt textarea:focus,
 .form-tt input[type=text],
 .form-tt input[type=email],
 .form-tt input[type=password],

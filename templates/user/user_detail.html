@@ -5,5 +5,8 @@
 
 
 {% block content %}
-    {{ user_details }}
+    <img src="{{ myuser.photo.url }}" class="w-25">
+    <p>
+    {{ myuser }}
+    </p>
 {% endblock %}

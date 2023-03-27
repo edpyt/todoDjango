@@ -20,7 +20,7 @@ from .forms import ToDoUser, LoginUserForm, RegistrationCustomUserForm
 class MyUserDetail(DetailView):
     model = MyUser
     template_name = 'user/user_detail.html'
-    context_object_name = 'user_details'
+    context_object_name = 'myuser'
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)

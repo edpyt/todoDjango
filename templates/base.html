@@ -20,7 +20,7 @@
 
         <div class="topnav-right">
             {% if user.is_authenticated %}
-                <a href="#">{{ user.username }}</a>
+                <a href="{% url 'user_profile' user.pk %}">{{ user.username }}</a>
                 <a href="{% url 'logout_myuser' %}">{% translate 'Logout' %}</a>
             {% else %}
                 <a href="{% url 'login_myuser' %}">{% translate 'Login' %}</a>
@@ -28,7 +28,7 @@
             {% endif %}
         </div>
     </div>
-
+    <br>
     <div class="container w-50 text-center">
         {% block content %}
         {% endblock %}

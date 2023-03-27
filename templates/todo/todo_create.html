@@ -9,8 +9,8 @@
     <form class="form-tt" method="POST" enctype="multipart/form-data" action="">
         {% csrf_token %}
         {{ form|crispy }}
-
-        <input class="btn btn-success" type="submit" value="{{ input_value }}">
+        <br>
+        <input class="btn btn-success w-100" type="submit" value="{{ input_value }}">
 
     </form>
 {% endblock %}
