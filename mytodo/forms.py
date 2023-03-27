@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.forms import ModelForm
 from django.utils.translation import gettext_lazy as _
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from .models import ToDoModel, MyUser
 from bootstrap_datepicker_plus.widgets import DateTimePickerInput
@@ -50,3 +51,9 @@ class UpdateCustomUserForm(forms.ModelForm):
             'username',
             'email',
             'photo')
+
+    def clean(self):
+        photo = self.cleaned_data['photo']
+        if type(photo) is InMemoryUploadedFile and self.instance.photo:
+            self.instance.photo.delete()
+        return super().clean()

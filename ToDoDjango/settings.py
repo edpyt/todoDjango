@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
     'crispy_forms',
     'crispy_bootstrap5',
+    'django_cleanup.apps.CleanupConfig',
     'mytodo.apps.MytodoConfig',
 ]
 
